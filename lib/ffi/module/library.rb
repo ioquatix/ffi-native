@@ -40,7 +40,7 @@ module FFI
 				@ffi_libraries << DynamicLibrary.open(name, flags)
 				
 				return true
-			rescue LoadError
+			rescue LoadError, RuntimeError
 				return nil
 			end
 			
