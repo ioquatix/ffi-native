@@ -51,6 +51,10 @@ module FFI
 				
 				return nil
 			end
+			
+			def ffi_load_failure(message)
+				raise LoadError, message
+			end
 		end
 	end
 end
