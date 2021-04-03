@@ -172,6 +172,29 @@ module FFI
 				ffi_define_generic_enumeration(name, FFI::Bitmask, native_type, *arguments)
 			end
 			
+			def ffi_find_type(argument)
+				if argument.kind_of?(Type)
+					return argument
+				end
+				
+				if type = @ffi_type_map[argument]
+					return type
+				end
+				
+				if argument.is_a?(Class) && argument < Struct
+					return Type::POINTER
+				end
+				
+				if argument.is_a?(DataConverter)
+					# Cache the mapped type:
+					return ffi_define_type(argument, Type::Mapped.new(argument))
+				end
+				
+				if argument
+					return FFI.find_type(argument)
+				end
+			end
+			
 		private
 			
 			def ffi_define_generic_enumeration(name, klass, native_type, values)
@@ -212,29 +235,6 @@ module FFI
 				end
 				
 				return result
-			end
-			
-			def ffi_find_type(argument)
-				if argument.kind_of?(Type)
-					return argument
-				end
-				
-				if type = @ffi_type_map[argument]
-					return type
-				end
-				
-				if argument.is_a?(Class) && argument < Struct
-					return Type::POINTER
-				end
-				
-				if argument.is_a?(DataConverter)
-					# Cache the mapped type:
-					return ffi_define_type(argument, Type::Mapped.new(argument))
-				end
-				
-				if argument
-					return FFI.find_type(argument)
-				end
 			end
 		end
 	end
