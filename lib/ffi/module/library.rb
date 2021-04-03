@@ -53,7 +53,7 @@ module FFI
 				return @ffi_calling_convention
 			end
 			
-			def ffi_attach_function(name, cname, argument_types, return_type = :void, **options)
+			def ffi_attach_function(name, argument_types, return_type = :void, as: name, **options)
 				argument_types = argument_types.map{|type| self.ffi_find_type(type)}
 				return_type = self.ffi_find_type(return_type)
 				
@@ -66,7 +66,7 @@ module FFI
 				@ffi_libraries.each do |library|
 					function = nil
 					
-					ffi_function_names(cname, argument_types).each do |function_name|
+					ffi_function_names(name, argument_types).each do |function_name|
 						break if function = library.find_function(function_name.to_s)
 					end
 					
@@ -82,29 +82,29 @@ module FFI
 				end
 				
 				if invoker
-					invoker.attach(self, name.to_s)
+					invoker.attach(self, as.to_s)
 					return true
 				else
-					raise FFI::NotFoundError.new(cname, @ffi_libraries)
+					raise FFI::NotFoundError.new(name, @ffi_libraries)
 				end
 			end
 			
-			def ffi_attach_variable(name, cname, type)
+			def ffi_attach_variable(name, type, as: name)
 				address = @ffi_libraries.find do |library|
 					begin
-						library.find_variable(cname)
+						library.find_variable(name)
 					rescue LoadError
 					end
 				end
 				
 				if address.nil? || address.null?
-					raise FFI::NotFoundError.new(cname, @ffi_libraries)
+					raise FFI::NotFoundError.new(name, @ffi_libraries)
 				end
 				
 				if type.is_a?(Class) && type < FFI::Struct
 					variable = type.new(address)
 					
-					self.define_singleton_method(name) do
+					self.define_singleton_method(as) do
 						variable
 					end
 				else
@@ -112,11 +112,11 @@ module FFI
 					container_type.layout :value, self.ffi_find_type(type)
 					container = container_type.new(address)
 					
-					self.define_singleton_method(name) do
+					self.define_singleton_method(as) do
 						container[:value]
 					end
 					
-					self.define_singleton_method(:"#{name}=") do |value|
+					self.define_singleton_method(:"#{as}=") do |value|
 						container[:value] = value
 					end
 				end

@@ -13,8 +13,8 @@ RSpec.describe FFI::Module do
 			m.include(FFI::Module)
 			m.ffi_open_library
 			
-			m.ffi_attach_function(:malloc, :malloc, [:size_t], :pointer)
-			m.ffi_attach_function(:free, :free, [:pointer])
+			m.ffi_attach_function(:malloc, [:size_t], :pointer)
+			m.ffi_attach_function(:free, [:pointer])
 			
 			pointer = m.malloc(128)
 			expect(pointer).to be_kind_of(FFI::Pointer)
