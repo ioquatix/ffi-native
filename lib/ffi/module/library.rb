@@ -41,6 +41,7 @@ module FFI
 				
 				return true
 			rescue LoadError, RuntimeError
+				# TruffleRuby raises a RuntimeError if the library can't be found.
 				return nil
 			end
 			
