@@ -51,10 +51,16 @@ module FFI
 					end
 				end
 				
+				result = false
+				
 				# Load all specified libraries:
 				names.each do |name|
-					ffi_load(name, search_paths: search_paths, **options)
+					result = ffi_load(name, search_paths: search_paths, **options) || result
 				end
+				
+				return result
+			rescue Errno::ENOENT
+				return nil
 			end
 		end
 	end
