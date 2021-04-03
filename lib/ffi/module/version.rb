@@ -20,6 +20,15 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
+begin
+	require 'ffi'
+rescue LoadError
+	# Ignore.
+	
+	# The FFI gem has the following in `ffi.rb`, so we need to be careful about load order:
+	# Object.send(:remove_const, :FFI) if defined?(::FFI)
+end
+
 module FFI
 	module Module
 		VERSION = "0.1.0"
