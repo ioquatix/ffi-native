@@ -150,9 +150,9 @@ module FFI
 			end
 			
 			def ffi_define_type(name, value)
-				case type
+				case value
 				when FFI::Type
-					@ffi_type_map[name] = type
+					@ffi_type_map[name] = value
 				when FFI::DataConverter
 					@ffi_type_map[name] = FFI::Type::Mapped.new(value)
 				else
@@ -163,13 +163,13 @@ module FFI
 			def ffi_define_enumeration(name, *arguments)
 				native_type = arguments.first.kind_of?(FFI::Type) ? arguments.shift : nil
 				
-				ffi_generic_enumeration(name, FFI::Enum, native_type, arguments)
+				ffi_define_generic_enumeration(name, FFI::Enum, native_type, *arguments)
 			end
 			
 			def ffi_define_bitmask(name, *arguments)
 				native_type = arguments.first.kind_of?(FFI::Type) ? arguments.shift : nil
 				
-				ffi_generic_enumeration(name, FFI::Bitmask, native_type, arguments)
+				ffi_define_generic_enumeration(name, FFI::Bitmask, native_type, *arguments)
 			end
 			
 		private

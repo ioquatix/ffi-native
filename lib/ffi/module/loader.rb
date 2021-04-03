@@ -35,22 +35,18 @@ module FFI
 				
 				return nil
 			end
-
+			
 			def ffi_load(name, search_paths: nil, **options)
 				# Try to load the library directly:
-				return true if ffi_load_library(name, **options)
+				return true if ffi_open_library(name, **options)
 				
 				# If that fails, try to load it from the specified search paths:
 				if search_paths&.any?
 					name = FFI.map_library_name(name)
 					
-					if path = ffi_find_library_path(library_name, search_paths)
-						if library = ffi_load_library(path, **options)
-							libraries << library
-						end
+					if path = ffi_find_library_path(name, search_paths)
+						return true if ffi_open_library(path, **options)
 					end
-					
-					return true if ffi_load_library(name, **options)
 				end
 				
 				return nil

@@ -33,6 +33,8 @@ module FFI
 				return false unless output = ::IO.popen(command).read
 				
 				arguments = ::Shellwords.split(output)
+				search_paths = search_paths.dup
+				names = names.dup
 				
 				arguments.each do |argument|
 					if match = argument.match(/\A(-[lL])(.*)\z/)
@@ -43,9 +45,9 @@ module FFI
 						when '-l'
 							names << value
 						end
-					else
+					elsif File.directory?(argument)
 						# Assume it's a search path:
-						search_paths << value
+						search_paths << argument
 					end
 				end
 				
