@@ -1,10 +1,13 @@
 # frozen_string_literal: true
 
-require_relative '../../lib/ffi/module'
+# Released under the MIT License.
+# Copyright, 2021-2023, by Samuel Williams.
 
-RSpec.describe FFI::Module do
+require 'ffi/module'
+
+describe FFI::Module do
 	it "has a version number" do
-		expect(FFI::Module::VERSION).not_to be nil
+		expect(FFI::Module::VERSION).to be =~ /\d+\.\d+\.\d+/
 	end
 	
 	describe '#ffi_attach_function' do
@@ -17,7 +20,7 @@ RSpec.describe FFI::Module do
 			m.ffi_attach_function(:free, [:pointer])
 			
 			pointer = m.malloc(128)
-			expect(pointer).to be_kind_of(FFI::Pointer)
+			expect(pointer).to be_a(FFI::Pointer)
 			m.free(pointer)
 		end
 	end
