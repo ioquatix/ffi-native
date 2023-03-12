@@ -1,8 +1,8 @@
-# FFI::Module
+# FFI::Native
 
 A modern interface for building foreign function interfaces for Ruby using the standard [ffi](https://github.com/ffi/ffi) gem.
 
-[![Development Status](https://github.com/ioquatix/ffi-module/workflows/Test/badge.svg)](https://github.com/ioquatix/ffi-module/actions?workflow=Test)
+[![Development Status](https://github.com/ioquatix/ffi-native/workflows/Test/badge.svg)](https://github.com/ioquatix/ffi-native/actions?workflow=Test)
 
 ## Contributing
 

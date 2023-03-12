@@ -3,12 +3,12 @@
 # Released under the MIT License.
 # Copyright, 2021-2023, by Samuel Williams.
 
-require_relative 'module/version'
-require_relative 'module/library'
-require_relative 'module/loader'
+require_relative 'native/version'
+require_relative 'native/library'
+require_relative 'native/loader'
 
 module FFI
-	module Module
+	module Native
 		def self.included(target)
 			target.extend(Library)
 			target.extend(Loader)

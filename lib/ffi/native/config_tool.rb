@@ -8,7 +8,7 @@ require 'shellwords'
 require_relative 'loader'
 
 module FFI
-	module Module
+	module Native
 		module ConfigTool
 			extend Loader
 			

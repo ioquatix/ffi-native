@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative "lib/ffi/module/version"
+require_relative "lib/ffi/native/version"
 
 Gem::Specification.new do |spec|
-	spec.name = "ffi-module"
-	spec.version = FFI::Module::VERSION
+	spec.name = "ffi-native"
+	spec.version = FFI::Native::VERSION
 	
 	spec.summary = "Write a short summary, because RubyGems requires one."
 	spec.authors = ["Samuel Williams"]
@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
 	spec.cert_chain  = ['release.cert']
 	spec.signing_key = File.expand_path('~/.gem/release.pem')
 	
-	spec.homepage = "https://github.com/ioquatix/ffi-module"
+	spec.homepage = "https://github.com/ioquatix/ffi-native"
 	
 	spec.metadata = {
 		"funding_uri" => "https://github.com/sponsors/ioquatix/",

@@ -6,7 +6,7 @@
 require 'ffi'
 
 module FFI
-	module Module
+	module Native
 		module Loader
 			def ffi_find_library_path(libname, search_paths)
 				search_paths.each do |search_path|

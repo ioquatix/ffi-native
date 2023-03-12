@@ -6,10 +6,10 @@
 require 'ffi'
 
 module FFI
-	module Module
+	module Native
 		module Library
 			def self.extended(target)
-				raise "Must only be extended by module, got #{target}!" unless target.kind_of?(::Module)
+				raise "Must only be extended by module, got #{target}!" unless target.kind_of?(Module)
 				
 				target.instance_variable_set(:@ffi_libraries, Array.new)
 				target.instance_variable_set(:@ffi_calling_convention, :default)

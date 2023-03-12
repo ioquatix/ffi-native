@@ -13,7 +13,7 @@ rescue LoadError
 end
 
 module FFI
-	module Module
+	module Native
 		VERSION = "0.3.0"
 	end
 end
